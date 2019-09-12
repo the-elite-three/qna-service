@@ -59,3 +59,8 @@ typings/
 
 # next.js build output
 .next
+
+# starting db data
+answers_photos.csv
+answers.csv
+questions.csv

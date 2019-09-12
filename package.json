@@ -1,0 +1,23 @@
+{
+  "name": "qna-service",
+  "version": "1.0.0",
+  "description": "backend for qna module in project greenfield",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/the-elite-three/qna-service.git"
+  },
+  "author": "VincentCSS",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/the-elite-three/qna-service/issues"
+  },
+  "homepage": "https://github.com/the-elite-three/qna-service#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {}
+}
