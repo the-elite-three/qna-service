@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const db = require('./queries');
 
-router.get('/:product_id', (req, res) => {
-  res.send(`Get request for questions under product id ${req.params.product_id}`);
-})
+router.get('/:product_id', db.getQuestions);
 
 router.get('/:question_id/answers', (req, res) => {
   res.send(`Get request for question ${req.params.question_id} answers`);
