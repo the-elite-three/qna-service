@@ -14,16 +14,10 @@ router.post('/:question_id/answers', db.addAnswer);
 
 router.put('/question/:question_id/helpful', db.updateHelpfulQuestion);
 
-router.put('/question/:question_id/report', (req, res) => {
-  res.send(`Put request to report question ${req.params.question_id}`);
-});
+router.put('/question/:question_id/report', db.reportQuestion);
 
-router.put('/answer/:answer_id/helpful', (req, res) => {
-  res.send(`Put request to add to answer ${req.params.answer_id} helpful count`);
-});
+router.put('/answer/:answer_id/helpful', db.updateHelpfulAnswer);
 
-router.put('/answer/:answer_id/report', (req, res) => {
-  res.send(`Put request to report answer ${req.params.answer_id}`)
-});
+router.put('/answer/:answer_id/report', db.reportAnswer);
 
 module.exports = router;

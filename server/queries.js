@@ -21,6 +21,9 @@ const queryStatements = {
     answerer_email, answer_reported, answer_helpful)',
   addPhoto: 'INSERT INTO photo (id, answer_id, url)',
   updateQuestionHelpful: 'UPDATE question SET question_helpful=(SELECT question_helpful FROM question WHERE question_id =',
+  reportQuestion: 'UPDATE question SET question_report=(SELECT question_report FROM question WHERE question_id =',
+  updateAnswerHelpful: 'UPDATE answer SET answer_helpful=(SELECT answer_helpful FROM answer WHERE answer_id =',
+  reportAnswer: 'UPDATE answer SET answer_report=(SELECT answer_report FROM answer WHERE answer_id =',
 };
 
 const getQuestions = (req, res) => {
@@ -123,9 +126,30 @@ const updateHelpfulQuestion = (req, res) => {
   })
 };
 
+const reportQuestion = (req, res) => {
+  pool.query(`${queryStatements.reportQuestion} ${req.params.question_id}) + 1 WHERE question_id = ${req.params.question_id}`, (err, results) => {
+    res.sendStatus(200);
+  });
+};
+
+const updateHelpfulAnswer = (req, res) => {
+  pool.query(`${queryStatements.updateAnswerHelpful} ${req.params.answer_id}) + 1 WHERE answer_id = ${req.params.answer_id}`, (err, results) => {
+    res.sendStatus(200);
+  });
+};
+
+const reportAnswer = (req, res) => {
+  pool.query(`${queryStatements.reportAnswer} ${req.params.answer_id}) + 1 WHERE answer_id = ${req.params.answer_id}`, (err, results) => {
+    res.sendStatus(200);
+  });
+};
+
 module.exports = {
   getQuestions,
   addQuestion,
   addAnswer,
   updateHelpfulQuestion,
+  reportQuestion,
+  updateHelpfulAnswer,
+  reportAnswer,
 }
