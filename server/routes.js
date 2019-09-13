@@ -12,9 +12,7 @@ router.post('/:product_id', db.addQuestion);
 
 router.post('/:question_id/answers', db.addAnswer);
 
-router.put('/question/:question_id/helpful', (req, res) => {
-  res.send(`Put request to add to question ${req.params.question_id} helpful count`);
-});
+router.put('/question/:question_id/helpful', db.updateHelpfulQuestion);
 
 router.put('/question/:question_id/report', (req, res) => {
   res.send(`Put request to report question ${req.params.question_id}`);

@@ -19,7 +19,8 @@ const queryStatements = {
     asker_email, question_reported, question_helpful)',
   addAnswer: 'INSERT INTO answer (answer_id, question_id, answer_body, answer_date_written, answerer_name, \
     answerer_email, answer_reported, answer_helpful)',
-  addPhoto: 'INSERT INTO photo (id, answer_id, url)'
+  addPhoto: 'INSERT INTO photo (id, answer_id, url)',
+  updateQuestionHelpful: 'UPDATE question SET question_helpful=(SELECT question_helpful FROM question WHERE question_id =',
 };
 
 const getQuestions = (req, res) => {
@@ -116,8 +117,15 @@ const addAnswer = (req, res) => {
   });
 };
 
+const updateHelpfulQuestion = (req, res) => {
+  pool.query(`${queryStatements.updateQuestionHelpful} ${req.params.question_id}) + 1 WHERE question_id = ${req.params.question_id}`, (err, results) => {
+    res.sendStatus(200);
+  })
+};
+
 module.exports = {
   getQuestions,
   addQuestion,
   addAnswer,
+  updateHelpfulQuestion,
 }
