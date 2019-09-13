@@ -18,7 +18,12 @@
   "homepage": "https://github.com/the-elite-three/qna-service#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "pg": "^7.12.1"
+    "express-sanitizer": "^1.0.5",
+    "htmlencode": "0.0.4",
+    "lodash": "^4.17.15",
+    "pg": "^7.12.1",
+    "sanitizer": "^0.1.3",
+    "underscore": "^1.9.1"
   },
   "devDependencies": {}
 }
