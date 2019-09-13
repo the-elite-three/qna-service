@@ -64,7 +64,9 @@ const getQuestions = (req, res) => {
 
     results.rows.map((photo) => {
       if (photo.url !== null) {
-        answerData[photo.answer_id].photos.push(photo.url.trim());
+        if (answerData[photo.answer_id].photos.length < 5) {
+          answerData[photo.answer_id].photos.push(photo.url.trim());
+        }
       }
     });
 
