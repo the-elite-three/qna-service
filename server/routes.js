@@ -10,9 +10,7 @@ router.get('/:question_id/answers', (req, res) => {
 
 router.post('/:product_id', db.addQuestion);
 
-router.post('/:question_id/answers', (req, res) => {
-  res.send(`Post request to add an aswer to question ${req.params.question_id}`);
-});
+router.post('/:question_id/answers', db.addAnswer);
 
 router.put('/question/:question_id/helpful', (req, res) => {
   res.send(`Put request to add to question ${req.params.question_id} helpful count`);

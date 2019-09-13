@@ -15,8 +15,11 @@ const queryStatements = {
     answer.answer_reported, photo.url FROM question \
     LEFT JOIN answer ON question.question_id = answer.question_id \
     LEFT JOIN photo ON answer.answer_id = photo.answer_id WHERE question.product_id = ',
-  addQuestion: 'INSERT INTO question(question_id, product_id, question_body, question_date_written, asker_name, \
-    asker_email, question_reported, question_helpful)'
+  addQuestion: 'INSERT INTO question (question_id, product_id, question_body, question_date_written, asker_name, \
+    asker_email, question_reported, question_helpful)',
+  addAnswer: 'INSERT INTO answer (answer_id, question_id, answer_body, answer_date_written, answerer_name, \
+    answerer_email, answer_reported, answer_helpful)',
+  addPhoto: 'INSERT INTO photo (id, answer_id, url)'
 };
 
 const getQuestions = (req, res) => {
@@ -81,13 +84,6 @@ const getQuestions = (req, res) => {
 };
 
 const addQuestion = (req, res) => {
-  //return console.log(req.body.name);
-  const betterQuotes = {
-    body: req.body.body,
-    name: req.body.name,
-    email: req.body.email,
-  }
-
   pool.query(`${queryStatements.addQuestion} VALUES (default, ${req.params.product_id}, \
     '${req.body.body}', default, '${req.body.name}', '${req.body.email}', 0, 0)`, (err, results) => {
       if (err) {
@@ -97,7 +93,31 @@ const addQuestion = (req, res) => {
   });
 };
 
+const addAnswer = (req, res) => {
+  pool.query(`${queryStatements.addAnswer} VALUES (default, ${req.params.question_id}, '${req.body.body}', default, '${req.body.name}', \
+  '${req.body.email}', 0, 0)`, (err, results) => {
+    if (err) {
+      console.log(err.stack);
+    } else {
+      if (req.body.photos.length > 0) {
+        let valueQuery = ''
+        for (let i = 0; i < req.body.photos.length; i++) {
+          i + 1 === req.body.photos.length ? valueQuery = valueQuery + `(default, (SELECT MAX(answer_id) FROM answer), ${req.body.photos[i]})`
+          : valueQuery = valueQuery + `(default, (SELECT MAX(answer_id) FROM answer), ${req.body.photos[i]}), `
+        }
+
+        pool.query(`${queryStatements.addPhoto} VALUES ${valueQuery}`, (err, results) => {
+          res.status(200).send('Created');
+        });
+      } else {
+        res.sendStatus(200);
+      }
+    }
+  });
+};
+
 module.exports = {
   getQuestions,
   addQuestion,
+  addAnswer,
 }
