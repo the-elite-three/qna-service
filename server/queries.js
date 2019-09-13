@@ -15,6 +15,8 @@ const queryStatements = {
     answer.answer_reported, photo.url FROM question \
     LEFT JOIN answer ON question.question_id = answer.question_id \
     LEFT JOIN photo ON answer.answer_id = photo.answer_id WHERE question.product_id = ',
+  addQuestion: 'INSERT INTO question(question_id, product_id, question_body, question_date_written, asker_name, \
+    asker_email, question_reported, question_helpful)'
 };
 
 const getQuestions = (req, res) => {
@@ -78,6 +80,24 @@ const getQuestions = (req, res) => {
   });
 };
 
+const addQuestion = (req, res) => {
+  //return console.log(req.body.name);
+  const betterQuotes = {
+    body: req.body.body,
+    name: req.body.name,
+    email: req.body.email,
+  }
+
+  pool.query(`${queryStatements.addQuestion} VALUES (default, ${req.params.product_id}, \
+    '${req.body.body}', default, '${req.body.name}', '${req.body.email}', 0, 0)`, (err, results) => {
+      if (err) {
+        throw err;
+      }
+      res.status(201).send('Created');
+  });
+};
+
 module.exports = {
   getQuestions,
+  addQuestion,
 }

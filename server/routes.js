@@ -8,9 +8,7 @@ router.get('/:question_id/answers', (req, res) => {
   res.send(`Get request for question ${req.params.question_id} answers`);
 });
 
-router.post('/:product_id', (req, res) => {
-  res.send(`Post request to add question for product ${req.params.product_id}`);
-});
+router.post('/:product_id', db.addQuestion);
 
 router.post('/:question_id/answers', (req, res) => {
   res.send(`Post request to add an aswer to question ${req.params.question_id}`);
